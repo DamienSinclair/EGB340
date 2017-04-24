@@ -1,6 +1,6 @@
-#This is a test program for reading a RFID card, detecting battery ID, machine ID and sending this data to a server for ENB345
-#Written for Python 2, August-October 2016
-#DEVELOPMENT BUILD 1.0
+# This is a test program for reading a RFID card, detecting battery ID, machine ID and sending this data to a server for ENB345
+# Written for Python 2, August-October 2016
+# DEVELOPMENT BUILD 1.0
 # Author: Gerard Rallos
 
 #Import Libraries:
