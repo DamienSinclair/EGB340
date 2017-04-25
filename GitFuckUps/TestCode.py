@@ -1,3 +1,3 @@
 
 
-print ("Created new Table")
+print ("Created different Table")
