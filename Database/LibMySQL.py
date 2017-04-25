@@ -1,17 +1,13 @@
-# Written by Damien Sinclair
 
 import MySQLdb
 
-# AWS Server Settings
+#Set Server Settings for AWS Server
 ip = "34.209.19.53"
 user = "root"
 password = "Peanut"
-database = "EGB340_AWS"
-
+database = "EGB340"
 
 # Creating Commands
-
-
 def addUser(userID, firstname, lastname):
         #Add a user to the database
 
@@ -20,7 +16,7 @@ def addUser(userID, firstname, lastname):
         # prepare a cursor object using cursor() method
         cursor = db.cursor()
         #Create New User
-        cursor.execute("INSERT INTO userData (userID, firstname, lastname) VALUES(%s, %s, %s, %s, %s);",( userID, firstname, lastname))
+        cursor.execute("INSERT INTO userData (userID, firstname, lastname) VALUES(%s, %s, %s);",( userID, firstname, lastname))
         # disconnect from server
         db.close()
 

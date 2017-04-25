@@ -2,10 +2,10 @@ import MySQLdb
 
 
 #Set Server Settings
-ip = "58.162.145.26"
+ip = "34.209.19.53"
 user = "root"
-password = "M2M"
-database = "userData"
+password = "Peanut"
+database = "EGB340"
 
 #Open Database Connection
 db = MySQLdb.connect(ip,user,password,database)
