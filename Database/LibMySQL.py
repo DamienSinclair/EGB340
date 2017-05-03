@@ -48,6 +48,22 @@ def queryCardID(userID):
         db.close()
         return data
 
+def queryProductID(productID):
+        #Queries Database and returns
+        #Must interpriate data using 'data[0]'
+
+        #Open Database Connection
+        db = MySQLdb.connect(ip,user,password,database)
+        # prepare a cursor object using cursor() method
+        cursor = db.cursor()
+        #Quesy Database
+        cursor.execute("SELECT ProductName, ProductPrice FROM Products WHERE ProductCode = %s;",(productID))
+        #Save Data
+        gdata = cursor.fetchone()
+        # disconnect from server
+        db.close()
+        return gdata
+
 ## Cost Calculator:
 
 from re import findall

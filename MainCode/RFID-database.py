@@ -1,14 +1,15 @@
+import sys
+
+sys.path.append('/Desktop/EGB340/RFID')
 from libRFID import *
 import Adafruit_PN532 as PN532
+
+sys.path.append('/Desktop/EGB340/Database')
 import MySQLdb
 from LibMySQL import *
-import time
-import sys
-import os
 
 #Configure the Reader
 pn532 = initialise_RFID(18, 25, 23, 24)
-
 
 while True :
 
@@ -19,13 +20,13 @@ while True :
 
     fname = Userdata[0]
     sname = Userdata[1]
-    
+
     print "Hello", (fname, sname)
 
     print "scan a product"
 
     while CardID != None:
-        
+
         ProductID = read(pn532)
 
         ProductData = queryProductID(ProductID)
