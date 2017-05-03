@@ -45,7 +45,7 @@ def queryCardID(userID):
         # prepare a cursor object using cursor() method
         cursor = db.cursor()
         #Quesy Database
-        cursor.execute("SELECT firstname, lastname FROM Users WHERE cardid = %s;",(userID))
+        cursor.execute("SELECT Firstname, LastName FROM Users WHERE UserCode = %s;",(userID))
         #Save Data
         data = cursor.fetchone()
         # disconnect from server
