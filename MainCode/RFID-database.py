@@ -9,11 +9,11 @@
 
 import sys
 
-sys.path.append('/Desktop/EGB340/RFID')
+sys.path.append('/home/pi/Desktop/EGB340/RFID')
 from libRFID import *
 import Adafruit_PN532 as PN532
 
-sys.path.append('/Desktop/EGB340/Database')
+sys.path.append('/home/pi/Desktop/EGB340/Database')
 import MySQLdb
 from LibMySQL import *
 

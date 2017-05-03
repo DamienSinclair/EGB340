@@ -1,3 +1,0 @@
-
-
-print ("Created new Table")

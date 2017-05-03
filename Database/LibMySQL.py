@@ -20,17 +20,21 @@ def addUser(userID, firstname, lastname):
         # disconnect from server
         db.close()
 
-def addProduct(productID, ProductName, ProductPrice):
-        #Add a user to the database
+def addProduct(ProductID, ProductName, ProductPrice):
+        #Add a product to the database
 
         #Open Database Connection
         db = MySQLdb.connect(ip,user,password,database)
         # prepare a cursor object using cursor() method
         cursor = db.cursor()
-        #Create New User
-        cursor.execute("INSERT INTO `EGB340`.`Products` (`ProductCode`, `ProductName`, `ProductPrice`) VALUES (%s, %s, %s);",(productID, ProductName, ProductPrice))
+        #Create New Product
+        cursor.execute("INSERT INTO Products (ProductCode, ProductName, ProductPrice) VALUES (%s, %s, %s);",(ProductID, ProductName, ProductPrice))
+        # Commit changes???
+        db.commit()
         # disconnect from server
+        
         db.close()
+        print "added"
 
 def queryCardID(userID):
         #Queries Database and returns fname, lname, credit and bottles
@@ -41,7 +45,7 @@ def queryCardID(userID):
         # prepare a cursor object using cursor() method
         cursor = db.cursor()
         #Quesy Database
-        cursor.execute("SELECT firstname, lastname FROM %s WHERE cardid = %s;",(fname, lname))
+        cursor.execute("SELECT firstname, lastname FROM Users WHERE cardid = %s;",(userID))
         #Save Data
         data = cursor.fetchone()
         # disconnect from server
@@ -66,21 +70,21 @@ def queryProductID(productID):
 
 ## Cost Calculator:
 
-from re import findall
-def totalCost(items):
-        #Open Database Connection
-        db = MySQLdb.connect(ip,user,password,database)
-        data1=[]
-        data2=[]
-        cost = 0
-        cursor = db.cursor()
-        for item in items:
-                cursor.execute("SELECT ProductPrice FROM Products WHERE ProductCode = %s;", (item))
-                data1 = [cursor.fetchone()]
-                data2 = data2 + findall('\(\'(.+)\',\)', str(data1))
-        cost = sum(float(i) for i in data2)
-        return cost
-        db.close()
+#from re import findall
+#def totalCost(items):
+ #       #Open Database Connection
+  #      db = MySQLdb.connect(ip,user,password,database)
+   #     data1=[]
+    #    data2=[]
+     #   cost = 0
+      #  cursor = db.cursor()
+       # for item in items:
+        #        cursor.execute("SELECT ProductPrice FROM Products WHERE ProductCode = %s;", (item))
+         #       data1 = [cursor.fetchone()]
+          #      data2 = data2 + findall('\(\'(.+)\',\)', str(data1))
+     #   cost = sum(float(i) for i in data2)
+      #  return cost
+       # db.close()
 
-lists = ['def1f6b5','def1f6b5']
-print totalCost(lists)
+#lists = ['def1f6b5','def1f6b5']
+#print totalCost(lists)
