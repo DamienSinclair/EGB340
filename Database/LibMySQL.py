@@ -20,6 +20,18 @@ def addUser(userID, firstname, lastname):
         # disconnect from server
         db.close()
 
+def addProduct(productID, ProductName, ProductPrice):
+        #Add a user to the database
+
+        #Open Database Connection
+        db = MySQLdb.connect(ip,user,password,database)
+        # prepare a cursor object using cursor() method
+        cursor = db.cursor()
+        #Create New User
+        cursor.execute("INSERT INTO `EGB340`.`Products` (`ProductCode`, `ProductName`, `ProductPrice`) VALUES (%s, %s, %s);",(productID, ProductName, ProductPrice))
+        # disconnect from server
+        db.close()
+
 def queryCardID(userID):
         #Queries Database and returns fname, lname, credit and bottles
         #Must interpriate data using 'data[0]'
@@ -35,7 +47,6 @@ def queryCardID(userID):
         # disconnect from server
         db.close()
         return data
-
 
 ## Cost Calculator:
 
