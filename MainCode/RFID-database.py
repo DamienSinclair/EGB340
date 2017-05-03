@@ -1,3 +1,12 @@
+# How the modules were setup
+# from libRFID import *
+# import Adafruit_PN532 as PN532
+# import MySQLdb
+# from LibMySQL import *
+# import time
+# import sys
+# import os
+
 import sys
 
 sys.path.append('/Desktop/EGB340/RFID')
