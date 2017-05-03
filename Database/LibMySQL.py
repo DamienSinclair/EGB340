@@ -16,7 +16,9 @@ def addUser(userID, firstname, lastname):
         # prepare a cursor object using cursor() method
         cursor = db.cursor()
         #Create New User
-        cursor.execute("INSERT INTO userData (userID, firstname, lastname) VALUES(%s, %s, %s);",(userID, firstname, lastname))
+        cursor.execute("INSERT INTO Users (UserCode, Firstname, LastName) VALUES(%s, %s, %s);",(userID, firstname, lastname))
+        # Commit changes
+        db.commit()
         # disconnect from server
         db.close()
 
@@ -29,10 +31,9 @@ def addProduct(ProductID, ProductName, ProductPrice):
         cursor = db.cursor()
         #Create New Product
         cursor.execute("INSERT INTO Products (ProductCode, ProductName, ProductPrice) VALUES (%s, %s, %s);",(ProductID, ProductName, ProductPrice))
-        # Commit changes???
+        # Commit changes
         db.commit()
         # disconnect from server
-        
         db.close()
         print "added"
 
