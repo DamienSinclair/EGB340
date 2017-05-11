@@ -4,12 +4,12 @@ import os
 
 #Import RFID Libs
 import Adafruit_PN532 as PN532
-sys.path.append('/home/pi/Desktop/EGB340/RFID')
+sys.path.append('/home/pi/Desktop/EGB340/EGB340/RFID')
 from libRFID import *
 
 #Import Database Libs
 import MySQLdb
-sys.path.append('/home/pi/Desktop/EGB340/Database')
+sys.path.append('/home/pi/Desktop/EGB340/EGB340/Database')
 from LibMySQL import*
 
 
