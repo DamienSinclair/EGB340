@@ -29,6 +29,7 @@ while True :
     Userdata = queryCardID(CardID)
 
     # the card is not registered to a user
+    # user is prompted to register or leave
     while not Userdata:
         print "You dont have an account with use"
         print "Would you like to set one up and speed up your shopping experience today?"
@@ -44,7 +45,7 @@ while True :
             addUser(CardID, FirstName, LastName)
             Userdata = Userdata = queryCardID(CardID)
             break
-                        
+
         #user wants to leave
         else:
             os.system('clear')
@@ -54,7 +55,7 @@ while True :
     # The card has a user
     while Userdata:
         fname = Userdata[0]
-        sname = Userdata[1] 
+        sname = Userdata[1]
         print('Hi %s') %fname
 
         print "You're good to go"
@@ -75,27 +76,17 @@ while True :
                 print("Your total is $%d" %Total)
                 break
 
+            # the item being scanned is not a product, cdo nothing and continue scanning
             elif not ProductData:
                     bob = "do nothing and keep scanning"
-            
-            # a product was scanned so add it to the tally
+
+            # a product was scanned so add it to the local total
             else:
                 pname = ProductData[0]
                 pprice = ProductData[1]
-                
-                
+
                 Total = Total + pprice
                 print("%s Costs $%s" % (pname, pprice))
-
                 print("Total $%d" % Total)
 
-            
         break
-                
-
-                
-
-
-
-
-                
