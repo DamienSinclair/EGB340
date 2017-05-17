@@ -1,7 +1,7 @@
 # import system libs
 import sys
-from tkinter import *
-import tkinter.font
+from Tkinter import *
+import tkFont
 
 #Import RFID Libs
 import Adafruit_PN532 as PN532
@@ -14,7 +14,7 @@ sys.path.append('/home/pi/Desktop/EGB340/Database')
 from LibMySQL import*
 
 #Configure the RFID Reader
-RFID-ID = initialise_RFID(6, 26, 13, 19)
+RFIID = initialise_RFID(6, 26, 13, 19)
 
 
 ## GUI Definitions
@@ -26,7 +26,7 @@ myFont = tkinter.font.Font(family = 'Helvetica', size = 12, weight = "bold")
 
 ## action event
 
-if not RFID-ID
+if not RFIID:
     RFIDRead["text"] = "%s" % RFID-ID
 
 ## Widgets
