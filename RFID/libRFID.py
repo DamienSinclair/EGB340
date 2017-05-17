@@ -3,7 +3,7 @@ import sys
 import Adafruit_PN532 as PN532
 
 def initialise_RFID(CS, SCLK, MOSI, MISO):
-    #creat pn532 of class PN532 
+    #creat pn532 of class PN532
     pn532 = PN532.PN532(cs=CS, sclk=SCLK, mosi=MOSI, miso=MISO)
 
     # initialize comms with PN532
