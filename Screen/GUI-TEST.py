@@ -2,17 +2,15 @@ from Tkinter import *
 import tkFont
 import RPi.GPIO as GPIO
 
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(40, GPIO.OUT)
-GPIO.output(40, GPIO.LOW)
+
 
 win = Tk()
 
 myFont = tkFont.Font(family = 'Helvetica', size = 36, weight = 'bold')
-
+k=1
 def ledON():
 	print("LED button pressed")
-	if GPIO.input(40) :
+	if k==1:
  		GPIO.output(40,GPIO.LOW)
 		ledButton["text"] = "LED ON"
 	else:
