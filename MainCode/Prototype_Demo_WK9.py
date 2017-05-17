@@ -4,12 +4,12 @@ import os
 
 #Import RFID Libs
 import Adafruit_PN532 as PN532
-sys.path.append('/home/pi/Desktop/EGB340/EGB340/RFID')
+sys.path.append('/home/pi/Desktop/EGB340/RFID')
 from libRFID import *
 
 #Import Database Libs
 import MySQLdb
-sys.path.append('/home/pi/Desktop/EGB340/EGB340/Database')
+sys.path.append('/home/pi/Desktop/EGB340/Database')
 from LibMySQL import*
 
 
@@ -17,7 +17,7 @@ os.system('clear')
 ProductID = 0
 
 #Configure the Reader
-pn532 = initialise_RFID(18, 25, 23, 24)
+pn532 = initialise_RFID(6, 26, 13, 19)
 
 while True :
     # Get the user to scan to borrow the Trolly
