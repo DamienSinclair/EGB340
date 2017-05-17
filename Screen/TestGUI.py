@@ -21,12 +21,16 @@ RFIID = initialise_RFID(6, 26, 13, 19)
 
 # creating the object mGui
 mGui = Tk()
-mGui.title("RFID/Screen Test")
+
 myFont = tkinter.font.Font(family = 'Helvetica', size = 12, weight = "bold")
 
 ## action event
 
+<<<<<<< HEAD
 if not RFIID:
+=======
+if not RFID-ID:
+>>>>>>> 7abd8afbafc0a8fa57a4f8c96c84988ad0dc47b9
     RFIDRead["text"] = "%s" % RFID-ID
 
 ## Widgets
@@ -34,4 +38,5 @@ RFIDRead = Button(mGui, text = 'Read RFID', font = myfont, command = readRFID, g
 RFIDRead.grid(row=0, column=1)
 
 #setting up the screen size
+mGui.title("RFID/Screen Test")
 mGui.geometry('400x400')
