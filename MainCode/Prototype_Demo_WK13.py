@@ -135,8 +135,7 @@ ProductID = 0
 pn532 = initialise_RFID(6, 26, 13, 19)
 
 
-
-window.mainloop(
+while True :
     # Get the user to scan to borrow the Trolly
     print "Please scan your card to borrow a trolley"
 
@@ -205,4 +204,4 @@ window.mainloop(
 ##                print("Total $%d" % Total)
 
         break
-)
+window.mainloop()
