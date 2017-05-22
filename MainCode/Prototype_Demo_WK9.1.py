@@ -27,7 +27,7 @@ from re import findall
 from StringIO import StringIO
 # Import the Python Imaging Library module (comment this line out
 # if you do not intend to use PIL in your solution)
-from PIL import Image, ImageTk
+#from PIL import Image, ImageTk
 
 ## Required Variables
 image_url='https://upload.wikimedia.org/wikipedia/en/thumb/0/0b/Woolworths_Stacked_Tag_RGB_Positive_HR.png/220px-Woolworths_Stacked_Tag_RGB_Positive_HR.png'
@@ -44,17 +44,17 @@ window.grid_rowconfigure(4, weight=1)
 ## Background Image
 # Download inital image, resize it to fit the screen and place it into the GUI
 # Open image from website
-original_image=Image.open(StringIO(urlopen(image_url).read()))
-required_height=300 # required pixel height of image
-# Find the ratio of the new height from the original height
-height_percentage=(required_height/float(original_image.size[1]))
-# Create a variable of the new width from the ratio of the original width
-image_width=int((float(original_image.size[0])*float(height_percentage)))
-#resize the image with the new size values and import the image into the window
-resized_image=original_image.resize((image_width, required_height),Image.ANTIALIAS)
-background_image=ImageTk.PhotoImage((resized_image))
-background_label = Label(window, image=background_image)
-background_label.place(x=0, y=30, relwidth=1, relheight=1)
+# original_image=Image.open(StringIO(urlopen(image_url).read()))
+# required_height=300 # required pixel height of image
+# # Find the ratio of the new height from the original height
+# height_percentage=(required_height/float(original_image.size[1]))
+# # Create a variable of the new width from the ratio of the original width
+# image_width=int((float(original_image.size[0])*float(height_percentage)))
+# #resize the image with the new size values and import the image into the window
+# resized_image=original_image.resize((image_width, required_height),Image.ANTIALIAS)
+# background_image=ImageTk.PhotoImage((resized_image))
+# background_label = Label(window, image=background_image)
+# background_label.place(x=0, y=30, relwidth=1, relheight=1)
 
 
 ## Main Headings
