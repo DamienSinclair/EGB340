@@ -1,26 +1,28 @@
-from Tkinter import *
-import tkFont
+from tkinter import *
+from tkinter import font
+
 import RPi.GPIO as GPIO
 
 
 
-win = Tk()
+win = tk()
 
 myFont = tkFont.Font(family = 'Helvetica', size = 36, weight = 'bold')
 k=1
+
 def ledON():
-	print("LED button pressed")
-	if k==1:
- 		GPIO.output(40,GPIO.LOW)
-		ledButton["text"] = "LED ON"
-	else:
-		GPIO.output(40,GPIO.HIGH)
-                ledButton["text"] = "LED OFF"
+    print("LED button pressed")
+    if k==1:
+        GPIO.output(40,GPIO.LOW)
+        ledButton["text"]="LED ON"
+    else:
+        GPIO.output(40,GPIO.HIGH)
+        ledButton["text"] = "LED OFF"
 
 def exitProgram():
-	print("Exit Button pressed")
-        GPIO.cleanup()
-	win.quit()
+    print("Exit Button pressed")
+    GPIO.cleanup()
+    win.quit()
 
 
 win.title("First GUI")

@@ -4,12 +4,12 @@ import os
 
 #Import RFID Libs
 import Adafruit_PN532 as PN532
-sys.path.append('C:\Users\calsp\Downloads\EGB340-master(1)\EGB340-master\RFID')
+sys.path.append('/home/pi/Desktop/EGB340/RFID'')
 from libRFID import *
 
 #Import Database Libs
 import MySQLdb
-sys.path.append('C:\Users\calsp\Downloads\EGB340-master(1)\EGB340-master\Database')
+sys.path.append('/home/pi/Desktop/EGB340/Database')
 from LibMySQL import*
 
 
@@ -23,7 +23,7 @@ from urllib import urlopen
 # Import the regular expression function
 from re import findall
 
-# Import a constructor for converting byte data to character strings 
+# Import a constructor for converting byte data to character strings
 from StringIO import StringIO
 # Import the Python Imaging Library module (comment this line out
 # if you do not intend to use PIL in your solution)
@@ -70,13 +70,13 @@ date_and_time_web_page_contents = urlopen(date_and_time_url).read()
 date=findall('ctdat>([A-Za-z, 0-9]*)',date_and_time_web_page_contents)
 time=findall('class=h1>(.*)</span> <span id=cta',date_and_time_web_page_contents)
 # Final string of the current date and time to be used in the GUI
-date_and_time=date[0]+" " + time[0] 
+date_and_time=date[0]+" " + time[0]
 date_label=Label(window, text=date_and_time, fg="black",
                  font=("Times New Roman", 10), justify=CENTER)
 date_label.grid(row=3, sticky = W + E)
 
 def item_added ():
-    part_label=Label(window, text='Latest product added: %s' % pname, fg="black", 
+    part_label=Label(window, text='Latest product added: %s' % pname, fg="black",
                   font=("Times New Roman", 20, 'bold'), justify=CENTER)
     price_label=Label(window, text='Price of %s is %s' % (pname, pprice), fg="black",
                   font=("Times New Roman", 20, 'bold'), justify=CENTER)
@@ -114,14 +114,14 @@ def done():
     list_box = Listbox(frame2, bd=0, height = 5)
     list_box.pack()
 ##    list_box.grid(row=4, sticky = W + E)
-    
+
     scroll.configure(command=list_box.yview)
     list_box.configure(yscrollcommand=scroll.set)
     for i in range(0,len(Products)):
         x=i+1
         list_box.insert(END,"%s:   %s   $%s" % (x, Products[i], Prices[i]))
         list_box.config(font=("Times New Roman", 15))
-    
+
 ##    frame2.pack()
 ##    total_label.pack()
     frame2.grid(row=5, sticky = W + E, columnspan=100)
