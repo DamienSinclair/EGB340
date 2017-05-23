@@ -8,14 +8,15 @@ sys.path.append('/home/pi/Desktop/EGB340/Database')
 from LibMySQL import *
 
 # RFID Library
-#adafruit Library
-import Adafruit_PN532 as PN532
+
 #scanning library
 sys.path.append('/home/pi/Desktop/EGB340/RFID')
 from libRFID import *
+#adafruit Library
+import Adafruit_PN532 as PN532
 
 #Configure the Reader
-pn532 = initialise_RFID(18, 25, 23, 24)
+pn532 = initialise_RFID(6, 26, 13, 19)
 
 # Setting up new product
 while 1:
