@@ -39,69 +39,40 @@ date_and_time=date[0]+" " + time[0]
 Products=[]
 Prices = []
 
-
 # GUI Definitions
     # Date and time
 date_label=Label(window, text=date_and_time, fg="black", font=("Times New Roman", 10), justify=CENTER)
 date_label.grid(row=3, sticky = W + E)
-    # Initial button - to start everything 
-main_button=Button(window, text="main", width=30, relief="groove", fg="black",
-                      command= lambda: main())
-main_button.grid(row=4, sticky = W + E)
 
-#Button Definitions
-    # Finish and Pay
-##finished_pay_button=Button(window, text="Finish and pay", width=30, relief="groove", fg="black", command= lambda: finished_pay_button())
-##finished_pay_button.grid(row=4, sticky = W + E)
-
-
-
-##part_label=Label(window, fg="black", font=("Times New Roman", 20, 'bold'), justify=CENTER)
-##price_label=Label(window,  fg="black", font=("Times New Roman", 20, 'bold'), justify=CENTER)
-##total_label=Label(window, fg="black", font=("Times New Roman", 20, 'bold'), justify=CENTER)
-
-    
-def Update_Cart(pname, pprice, Total, fname):
-    product_label.config(text='Latest product added: %s' % pname)
-    price_label.config(text='Price of %s is %s' % (pname, pprice))
-    total_label.config(text='Your current running total is $%s' % Total)
-    start_label.forget()
-    main_label.config(text = '%s current shopping' % fname, fg='black', font=("Times New Roman", 10))
-    product_label.grid(row=5, sticky = W + E)
-    price_label.grid(row=6, sticky = W + E)
-    total_label.grid(row=7, sticky = W + E)
-
-    product_label.update()
-    price_label.update()
-    total_label.update()
-    main_label.update()
-   
    
 def main():
-    os.system('clear')   
-    main_button.destroy()
+    Waiting_for_user()
+    os.system('clear')
+
+    global pressed
+    global finished_pay_button
+
     pressed = False
+    
     print "tests"
-##    information.grid(row=10, sticky = W + E)
+
     while True:
         # Get the user to scan to borrow the Trolly
         print "Please scan your card to borrow a trolley"
-
         
         #Read Current Value
         CardID = read(pn532)
 
         # test line
         print CardID + "5"
-        main_button.destroy()
+
         Total = 0
         finished = 0
         Userdata = queryCardID(CardID)
 
         # test line
         print CardID + "4"
-        print Userdata[0]
-              
+      
         # The card has a user
         while Userdata:
             # test line
@@ -125,14 +96,14 @@ def main():
 
                 ProductID = read(pn532)
                 ProductData = queryProductID(ProductID)
-                
-
+        
                 # a product was scanned so add it to the local total
                 if ProductData:
 
                     # test line
-                    print '2Product info comming soon'
-
+                    print 'Product Data is in MySQL Database'
+                    print ProductData
+                            
                     pname = ProductData[0]
                     pprice = ProductData[1]
 
@@ -141,42 +112,94 @@ def main():
                     Prices.append(pprice)
 
                     Total = Total + pprice
-
+                    
                     # Update Screen
                     Update_Cart(pname, pprice, Total, fname)
                     
                 # The item is product
                 elif ProductID == CardID:
 
+                    # test line
+                    print 'ProductID is CardID'
+                    print ProductData
+                    
                     Check_out(Products, Prices, Total)
-
+                    
                     # test line
                     print"2Thanks anyways, checkout with us later"
                     print CardID + "2"
-                    finished_pay_button=Button(window, text="Finish and pay", width=30, relief="groove", fg="black", command= lambda: finished_pay_button())
+                    finished_pay_button=Button(window, text="Finish and pay", width=30, relief="groove", fg="black",
+                                               command= finish_pay)
                     finished_pay_button.grid(row=4, sticky = W + E)
 
-                    finished_pay_button.update()
-##                    while ProductID == CardID:
+                    while pressed == False:
+                        finished_pay_button.update()
 
-                    print"Stuck in loop"
-                    if pressed:
-                        finish_pay()
+                    # Reset all variable used
+                    pressed = False
+                    CardID = None
+                    Userdata = []
+                    ProductData = []
+                    ProductID = None
+                    pname = None
+                    pprice = None
+                    fname = None
+                    finished = 1
+                    finished_pay_button.grid_forget()
 
-                        
-##                    if not finished_pay_button:
-##                        finish_pay()
-
-##                    finished_pay_button.update()
-##                    x=1
-##                    while x==1:
-##                        print"Stuck in loop"
-                    
-
-            # test line
-            print"end of first loop"
+                    print ProductData
             
+                    print"RESET"
 
+                    Waiting_for_user()
 
+            print"end of first loop"
 
+def Check_out(Products, Prices, Total):
+    global frame2
+    global list_box
+    global scroll
+
+    product_label.grid_forget()
+    price_label.grid_forget()
+    
+    frame2=Frame(window, bd=2, relief=SUNKEN)
+    scroll = Scrollbar(frame2, orient=VERTICAL)
+    scroll.pack(side=RIGHT,fill=Y)
+    list_box = Listbox(frame2, bd=0, height = 5)
+    list_box.pack()
+    scroll.configure(command=list_box.yview)
+    list_box.configure(yscrollcommand=scroll.set)
+
+    for i in range(0,len(Products)):
+        x=i+1
+        list_box.insert(END,"%s:   %s   $%s" % (x, Products[i], Prices[i]))
+        list_box.config(font=("Times New Roman", 15))
+
+    frame2.grid(row=5, sticky = W + E, columnspan=100)
+
+    total_label.config(text='Your total is $%s' % Total)
+
+    total_label.update()
+
+    print "2lease scan your card to borrow a trolley"
+ 
+
+def finish_pay():
+    
+    total_label.grid_forget()
+
+    global pressed
+    global finished_pay_button
+    global frame2
+    global list_box
+    global scroll
+
+    pressed = True
+    finished_pay_button.grid_forget()
+    list_box.pack_forget()
+    scroll.grid_forget()
+    frame2.grid_forget()
+
+main()
 window.mainloop()
