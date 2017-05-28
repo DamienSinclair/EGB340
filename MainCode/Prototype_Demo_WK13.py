@@ -1,6 +1,7 @@
 #Import system libs
 import sys
 import os
+import time
 
 #Import RFID Libs
 sys.path.append('/home/pi/Desktop/EGB340/RFID')
@@ -20,7 +21,6 @@ from Tkinter import *
 sys.path.append('/home/pi/Desktop/EGB340/Screen')
 from LibScreen import*
 
-
 #Import Live Date & Time Libs
 from urllib import urlopen
 from re import findall
@@ -35,10 +35,6 @@ time=findall('class=h1>(.*)</span> <span id=cta',date_and_time_web_page_contents
 date_and_time=date[0]+" " + time[0]
 
 
-# Global Variables
-Products=[]
-Prices = []
-
 # GUI Definitions
     # Date and time
 date_label=Label(window, text=date_and_time, fg="black", font=("Times New Roman", 10), justify=CENTER)
@@ -46,6 +42,11 @@ date_label.grid(row=3, sticky = W + E)
 
    
 def main():
+    # setup Lists
+    Products=[]
+    Prices = []
+    ProductID_list = []
+
     Waiting_for_user()
     os.system('clear')
 
@@ -96,27 +97,51 @@ def main():
 
                 ProductID = read(pn532)
                 ProductData = queryProductID(ProductID)
+                
         
                 # a product was scanned so add it to the local total
                 if ProductData:
 
-                    # test line
-                    print 'Product Data is in MySQL Database'
-                    print ProductData
-                            
-                    pname = ProductData[0]
-                    pprice = ProductData[1]
+                    # ProductID not in ProductID_list
+                    if ProductID not in [str(y) for x in ProductID_list for y in x.split()]:
+                       
+                        ProductID_list.append(ProductID)
+			print 'Product NOT in ProductID_list'					
+					
+			# test line
+			print 'Product Data is in MySQL Database'
+			print ProductData
+				  
+			pname = ProductData[0]
+			pprice = ProductData[1]
 
-                    # add new items and price to Python Lists
-                    Products.append(pname)
-                    Prices.append(pprice)
+			# add new items and price to Python Lists
+			Products.append(pname)
+			Prices.append(pprice)
+			Total = Total + pprice
+	
+			# Update Screen
+			Update_Cart(pname, pprice, Total, fname)
 
-                    Total = Total + pprice
-                    
-                    # Update Screen
-                    Update_Cart(pname, pprice, Total, fname)
-                    
-                # The item is product
+
+                    # Item already been scanned, product will be removed    
+                    elif ProductID in [str(y) for x in ProductID_list for y in x.split()]:
+                        print 'ProductID IN list to be removed'
+			ProductID_list.remove(ProductID)
+
+                        #Product Info
+    			pname = ProductData[0]
+			pprice = ProductData[1]
+
+			# add new items and price to Python Lists
+			Products.remove(pname)
+			Prices.remove(pprice)
+			Total = Total - pprice
+	
+			# Update Screen
+			Remove_Cart(pname, pprice, Total, fname)
+                                           
+                # The Card scanned in the UserID
                 elif ProductID == CardID:
 
                     # test line
@@ -128,45 +153,42 @@ def main():
                     # test line
                     print"2Thanks anyways, checkout with us later"
                     print CardID + "2"
-                    finished_pay_button=Button(window, text="Finish and pay", width=30, relief="groove", fg="black",
-                                               command= finish_pay)
-                    finished_pay_button.grid(row=4, sticky = W + E)
 
-                    while pressed == False:
-                        finished_pay_button.update()
+                    ## Scab Card to Finish
+                    CheckoutID = read(pn532)
 
-                    # Reset all variable used
-                    pressed = False
-                    CardID = None
-                    Userdata = []
-                    ProductData = []
-                    ProductID = None
-                    pname = None
-                    pprice = None
-                    fname = None
-                    finished = 1
-                    finished_pay_button.grid_forget()
+                    if CheckoutID == CardID:
+                        print"RESET"
+                        pressed = False
+                        CardID = None
+                        ProductID = None
+                        pname = None
+                        pprice = None
+                        fname = None
+                        finished = 1
+                        finish_pay()
 
                     print ProductData
-            
-                    print"RESET"
-
-                    Waiting_for_user()
+             
+                    window.after(500, Waiting_for_user())
 
             print"end of first loop"
 
 def Check_out(Products, Prices, Total):
     global frame2
+    global product_label
+    global price_label
     global list_box
     global scroll
 
     product_label.grid_forget()
+    product1_label.grid_forget()
     price_label.grid_forget()
     
     frame2=Frame(window, bd=2, relief=SUNKEN)
     scroll = Scrollbar(frame2, orient=VERTICAL)
     scroll.pack(side=RIGHT,fill=Y)
-    list_box = Listbox(frame2, bd=0, height = 5)
+    list_box = Listbox(frame2, bd=0, height = 5, width=40)
     list_box.pack()
     scroll.configure(command=list_box.yview)
     list_box.configure(yscrollcommand=scroll.set)
@@ -190,16 +212,15 @@ def finish_pay():
     total_label.grid_forget()
 
     global pressed
-    global finished_pay_button
     global frame2
     global list_box
     global scroll
 
     pressed = True
-    finished_pay_button.grid_forget()
     list_box.pack_forget()
     scroll.grid_forget()
     frame2.grid_forget()
 
+#start mainloop
 main()
 window.mainloop()

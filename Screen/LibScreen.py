@@ -16,6 +16,9 @@ main_label=Label(window, text="Welcome to Woolworths", fg="green", font=("Times 
 start_label=Label(window, text="Please scan your card to borrow a trolley", fg="black", font=("Times New Roman", 15), justify=CENTER)
     # Product Label
 product_label=Label(window, fg="black", font=("Times New Roman", 20, 'bold'), justify=CENTER)
+# Product1 Label
+product1_label=Label(window, fg="black", font=("Times New Roman", 20, 'bold'), justify=CENTER)
+    
     # Price
 price_label=Label(window,  fg="black", font=("Times New Roman", 20, 'bold'), justify=CENTER)
     # Total
@@ -47,19 +50,40 @@ def product_info():
                   font=("Times New Roman", 20, 'bold'), justify=CENTER)
     info_label.grid(row=5, sticky = W + E)
     print 'Product info comming soon'
-
+def Remove_Cart(pname, pprice, Total, fname):
+    # Forget Unused 
+    start_label.grid_forget()
+        # Text Defs
+    product_label.config(text='Product removed')
+    product1_label.config(text='%s' % pname)
+    #price_label.config(text='The price is $%s' % pprice)
+    total_label.config(text='Your current running total is $%s' % Total)
+    main_label.config(text = '%s current shopping - Scan your card to finish' % fname, fg='black', font=("Times New Roman", 10))
+        # Grid Defs
+    product_label.grid(row=5, sticky = W + E)
+    product1_label.grid(row=6, sticky = W + E)
+    price_label.grid(row=7, sticky = W + E)
+    total_label.grid(row=8, sticky = W + E)
+        # Push to Window
+    product_label.update()
+    price_label.update()
+    total_label.update()
+    main_label.update()   
+    
 def Update_Cart(pname, pprice, Total, fname):
         # Forget Unused 
     start_label.grid_forget()
         # Text Defs
-    product_label.config(text='Latest product added: %s' % pname)
-    price_label.config(text='Price of %s is %s' % (pname, pprice))
+    product_label.config(text='Latest product added')
+    product1_label.config(text='%s' % pname)
+    price_label.config(text='The price is $%s' % pprice)
     total_label.config(text='Your current running total is $%s' % Total)
-    main_label.config(text = '%s current shopping' % fname, fg='black', font=("Times New Roman", 10))
+    main_label.config(text = '%s current shopping - Scan your card to finish' % fname, fg='black', font=("Times New Roman", 10))
         # Grid Defs
     product_label.grid(row=5, sticky = W + E)
-    price_label.grid(row=6, sticky = W + E)
-    total_label.grid(row=7, sticky = W + E)
+    product1_label.grid(row=6, sticky = W + E)
+    price_label.grid(row=7, sticky = W + E)
+    total_label.grid(row=8, sticky = W + E)
         # Push to Window
     product_label.update()
     price_label.update()
